@@ -44,6 +44,8 @@ class StaticServer(BaseServer):
     def get_handler(self, server_addr, peer, path, options):
         if path == "/jos-grub":
             path = path + "-" + peer[0]
+        elif (path == "/boot/grub/grub.cfg") and os.path.exists("shutdown-" + peer[0]):
+            path = "/boot/grub/grub-shutdown.cfg"
         print("get %s" % path)
         return StaticHandler(
             server_addr, peer, path, options, self._root,
